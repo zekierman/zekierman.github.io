@@ -54,6 +54,6 @@ My other personal site, available in English and Turkish.
 
 ### AI Engineering from Scratch (contribution)
 
-*[github.com/rohitg00/ai-engineering-from-scratch](https://github.com/rohitg00/ai-engineering-from-scratch)*
+*Pull request [#526](https://github.com/rohitg00/ai-engineering-from-scratch/pull/526) · merged October 8, 2026 · [repository](https://github.com/rohitg00/ai-engineering-from-scratch)*
 
-I translated the README of this open-source AI engineering course into Turkish.
+I completed the Turkish translation of the README for this open-source AI engineering course: the "Start here" section, the lesson workflow and the first-evidence guide. The pull request was merged into the main project.
