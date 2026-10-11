@@ -10,7 +10,7 @@ toc_sticky: true
 
 ### Pandoo
 
-*Mobile app · App Store and Google Play*
+*Mobile app · [App Store](https://apps.apple.com/tr/app/id6803645504) · [Google Play](https://play.google.com/store/apps/details?id=com.novantesoft.pandoo)*
 
 A digital loyalty card for cafes. Customers collect stamps by scanning a QR code at the counter instead of carrying paper cards.
 
