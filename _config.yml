@@ -1,0 +1,70 @@
+# Personal site of Zeki Erman — Jekyll + Minimal Mistakes, served by GitHub Pages.
+remote_theme: "mmistakes/minimal-mistakes@4.26.2"
+minimal_mistakes_skin: "aqua"
+
+locale: "en-US"
+title: "Zeki Erman"
+name: "Zeki Erman"
+description: "Computer engineering student. I build web and mobile products."
+url: "https://zekierman.github.io"
+baseurl: ""
+repository: "zekierman/zekierman.github.io"
+search: false
+
+author:
+  name: "Zeki Erman"
+  avatar: "https://github.com/zekierman.png"
+  bio: "3rd-year computer engineering student at Necmettin Erbakan University."
+  location: "Konya, Türkiye"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/zekierman"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/zeki-erman-2197b3248/"
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope"
+      url: "mailto:zekierman01@outlook.com"
+
+footer:
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/zekierman"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/zeki-erman-2197b3248/"
+
+include:
+  - _pages
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+
+plugins:
+  - jekyll-remote-theme
+  - jekyll-include-cache
+  - jekyll-feed
+  - jekyll-sitemap
+
+permalink: /:categories/:title/
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      share: false
+      related: false
+  - scope:
+      path: "_pages"
+      type: pages
+    values:
+      layout: single
+      author_profile: true
