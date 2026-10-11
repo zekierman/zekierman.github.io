@@ -40,12 +40,6 @@ A herdr plugin that asks every coding agent the same question, then lets a judge
 
 An AI study skill for university courses. Works with Claude Code, Codex, Antigravity and Obsidian.
 
-### coffee-brew-tracker
-
-*TypeScript · [github.com/zekierman/coffee-brew-tracker](https://github.com/zekierman/coffee-brew-tracker)*
-
-A mobile app for tracking coffee recipes and brewing history.
-
 ### akilli-galeri-sistemi
 
 *JavaScript · [github.com/zekierman/akilli-galeri-sistemi](https://github.com/zekierman/akilli-galeri-sistemi)*

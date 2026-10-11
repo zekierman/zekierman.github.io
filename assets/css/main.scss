@@ -1,0 +1,118 @@
+---
+# Custom dark theme on top of Minimal Mistakes' "dark" skin: ink background, turquoise accents,
+# Space Grotesk headings, IBM Plex Sans body, JetBrains Mono for small labels.
+---
+
+@charset "utf-8";
+
+$ink: #0e1113;
+$panel: #151a1d;
+$line: #242b2f;
+$text: #e3e8e6;
+$muted: #8c9a97;
+$turquoise: #2da59f;
+$turquoise-light: #5fd0c9;
+
+$sans-serif: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+$monospace: "JetBrains Mono", Menlo, Consolas, monospace;
+$header-font-family: "Space Grotesk", $sans-serif;
+
+$background-color: $ink;
+$text-color: $text;
+$primary-color: $turquoise;
+$border-color: $line;
+$code-background-color: $panel;
+$code-background-color-dark: $panel;
+$link-color: $turquoise-light;
+$link-color-hover: #8ee3dd;
+$link-color-visited: $turquoise-light;
+$masthead-link-color: $text;
+$masthead-link-color-hover: $turquoise-light;
+$navicon-link-color-hover: $turquoise-light;
+$footer-background-color: $panel;
+
+@import "minimal-mistakes/skins/dark";
+@import "minimal-mistakes";
+
+/* masthead: thin turquoise line under the bar */
+.masthead {
+  background: rgba($ink, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid $line;
+  box-shadow: inset 0 -2px 0 rgba($turquoise, 0.35);
+}
+.site-title {
+  font-family: $header-font-family;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.greedy-nav a {
+  font-family: $monospace;
+  font-size: 0.78em;
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+}
+.greedy-nav a::before { content: "/"; color: $turquoise; margin-right: 0.15em; }
+
+/* headings */
+.page__title {
+  color: $text;
+  font-size: 2.6em;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+.page__content h2 {
+  font-family: $monospace;
+  font-size: 0.8em;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: $turquoise;
+  border-bottom: 1px solid $line;
+  margin-top: 2.6em;
+}
+.page__content h3 {
+  font-size: 1.35em;
+  margin-top: 1.8em;
+  margin-bottom: 0.2em;
+  padding-left: 0.7em;
+  border-left: 3px solid $turquoise;
+}
+.page__content h3 + p em { color: $muted; font-style: normal; font-family: $monospace; font-size: 0.78em; }
+.page__content p { line-height: 1.7; }
+
+/* sidebar profile */
+.author__avatar img {
+  border: 2px solid $turquoise;
+  padding: 3px;
+  background: $ink;
+}
+.author__name { font-family: $header-font-family; font-weight: 700; }
+.author__bio { color: $muted; }
+.author__urls a {
+  font-family: $monospace;
+  font-size: 0.85em;
+  color: $text;
+  &:hover { color: $turquoise-light; }
+}
+.author__urls .fa-fw, .author__urls i, .author__urls svg { color: $turquoise; }
+.author__urls li { margin-bottom: 0.15em; }
+
+/* table of contents on Projects */
+.toc {
+  background: $panel;
+  border: 1px solid $line;
+  box-shadow: none;
+  .nav__title { background: transparent; color: $turquoise; font-family: $monospace; border-bottom: 1px solid $line; }
+  .toc__menu a { color: $muted; border-bottom-color: $line; &:hover { color: $turquoise-light; } }
+}
+
+/* footer */
+.page__footer {
+  border-top: 1px solid $line;
+  color: $muted;
+  font-family: $monospace;
+  font-size: 0.8em;
+}
+
+::selection { background: rgba($turquoise, 0.35); }

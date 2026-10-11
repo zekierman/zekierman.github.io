@@ -1,6 +1,6 @@
 # Personal site of Zeki Erman — Jekyll + Minimal Mistakes, served by GitHub Pages.
 remote_theme: "mmistakes/minimal-mistakes@4.26.2"
-minimal_mistakes_skin: "aqua"
+minimal_mistakes_skin: "dark" # customised in assets/css/main.scss
 
 locale: "en-US"
 title: "Zeki Erman"
@@ -17,12 +17,21 @@ author:
   bio: "3rd-year computer engineering student at Necmettin Erbakan University."
   location: "Konya, Türkiye"
   links:
+    - label: "zekierman.me"
+      icon: "fas fa-fw fa-globe"
+      url: "https://zekierman.me"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/zekierman"
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/zeki-erman-2197b3248/"
+    - label: "X"
+      icon: "fab fa-fw fa-x-twitter"
+      url: "https://x.com/zekierman01"
+    - label: "Instagram"
+      icon: "fab fa-fw fa-instagram"
+      url: "https://www.instagram.com/zekierman_/"
     - label: "Email"
       icon: "fas fa-fw fa-envelope"
       url: "mailto:zekierman01@outlook.com"
