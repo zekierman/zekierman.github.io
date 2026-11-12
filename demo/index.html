@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guess or know?</title>
+<meta name="description" content="A one-minute demo for the talk Why Good UI Feels Good: answer four questions on real screens and see how long your brain needs.">
+<style>
+  :root { --ink: #151515; --gray: #6b6b6b; --line: #d9d9d9; --red: #b3261e; --bg: #fff; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 18px/1.45 "Segoe UI", system-ui, -apple-system, sans-serif; }
+  main { max-width: 980px; margin: 0 auto; padding: 28px 16px 48px; min-height: 100vh; display: flex; flex-direction: column; }
+  .top { display: flex; justify-content: space-between; gap: 16px; font-size: 15px; color: var(--gray); border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+  .top a { color: var(--gray); }
+  h1, h2 { font-family: Georgia, "Times New Roman", serif; font-weight: normal; margin: 0; }
+  h1 { font-size: clamp(40px, 7vw, 72px); line-height: 1.05; margin-top: 12vh; }
+  h2 { font-size: clamp(28px, 4.5vw, 44px); line-height: 1.15; }
+  .lead { font-size: clamp(19px, 2.4vw, 24px); max-width: 34em; margin: 18px 0 32px; }
+  .small { font-size: 15px; color: var(--gray); }
+  button { font: inherit; cursor: pointer; }
+  .go { background: var(--ink); color: #fff; border: 0; padding: 14px 30px; font-size: 20px; border-radius: 3px; }
+  .go:focus-visible, .ans:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+  .meta { display: flex; justify-content: space-between; margin: 28px 0 10px; font-size: 15px; color: var(--gray); }
+  .timer { font-variant-numeric: tabular-nums; }
+  .screen { min-height: 230px; display: flex; align-items: center; justify-content: center; margin: 22px 0; padding: 18px; border: 1px solid var(--line); }
+  .screen img { max-width: 100%; height: auto; display: block; }
+  .screen.wait img { visibility: hidden; }
+  .answers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .ans { text-align: left; background: #fff; border: 1.5px solid var(--ink); border-radius: 3px; padding: 12px 14px; font-size: 18px; }
+  .ans b { display: inline-block; width: 1.4em; color: var(--gray); font-weight: normal; }
+  .ans:hover { background: #f3f3f3; }
+  .ans:disabled { cursor: default; opacity: .45; }
+  .ans.picked { opacity: 1; background: var(--ink); color: #fff; }
+  .ans.picked b { color: #ccc; }
+  .note { min-height: 1.6em; margin-top: 14px; font-size: 20px; }
+  .note.guess { color: var(--red); }
+  table { width: 100%; border-collapse: collapse; margin: 26px 0 8px; }
+  th, td { text-align: left; padding: 12px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-weight: normal; font-size: 15px; color: var(--gray); }
+  td.t { font-size: 26px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.t.slow { color: var(--red); }
+  td .small { display: block; }
+  #result h2 { margin-top: 28px; }
+  .end { font-family: Georgia, serif; font-size: clamp(22px, 3vw, 30px); max-width: 30em; margin: 26px 0; }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .row a { color: var(--ink); }
+  .src { margin-top: auto; padding-top: 32px; }
+  [hidden] { display: none !important; }
+  @media (max-width: 640px) {
+    .answers { grid-template-columns: 1fr; }
+    td.t { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="top"><span>Why Good UI Feels Good &middot; demo</span><a href="/presentation/">Back to the talk</a></div>
+
+  <section id="start">
+    <h1>Guess or know?</h1>
+    <p class="lead">Four questions. Each one comes with two real screens. Answer as fast as you can, and see how long your brain needs.</p>
+    <button class="go" id="go">Start</button>
+    <p class="small">Keys: Enter to start, 1 2 3 to answer.</p>
+  </section>
+
+  <section id="round" hidden>
+    <div class="meta"><span id="count"></span><span class="timer" id="timer">0.0 s</span></div>
+    <h2 id="q"></h2>
+    <div class="screen wait" id="screen"><img id="img" src="/assets/demo/d-l.jpg" alt="Snowe screen"></div>
+    <div class="answers" id="answers"></div>
+    <p class="note" id="note"></p>
+  </section>
+
+  <section id="result" hidden>
+    <h2>Your times</h2>
+    <table>
+      <thead><tr><th>Question</th><th>Screen 1</th><th>Screen 2</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p class="end">Every second on the first screen was your brain asking a question. Good UI answers it before you ask.</p>
+    <div class="row"><button class="go" id="again">Try again</button><a href="/presentation/">Back to the talk</a></div>
+  </section>
+
+  <p class="small src">Screens: Baymard Institute (checkout, error message and size research) and Linear (2026 design refresh). The second screen is a little easier because you already know the question; the gap is still there.</p>
+</main>
+
+<script>
+const D = "/assets/demo/";
+// each question: two real screens; first one makes you guess, second one tells you
+const Q = [
+  { q: "When will my order arrive?", screens: [
+    { img: "d-l.jpg", w: 740, who: "Snowe", a: ["This week", "Next week", "It doesn't say"], note: "4–7 business days: now you count days in your head.", guess: true },
+    { img: "d-r.jpg", w: 580, who: "Apple", a: ["Thursday, April 21", "Next week", "It doesn't say"], note: "The date is right there." } ] },
+  { q: "What is wrong with this field?", screens: [
+    { img: "e-l.jpg", w: 750, who: "GameStop", a: ["The number is missing", "Something about the format", "It doesn't say"], note: "The number is there, but the message says it's missing.", guess: true },
+    { img: "e-r.jpg", w: 910, who: "Away", a: ["Some digits are missing", "The card is expired", "It doesn't say"], note: "It tells you exactly what to fix." } ] },
+  { q: "Can I buy this in XXL?", screens: [
+    { img: "z-l.jpg", w: 450, who: "Adidas", a: ["Yes", "No", "I have to open the menu"], note: "The sizes are hidden. You have to open the menu.", guess: true },
+    { img: "z-r.jpg", w: 700, who: "Under Armour", a: ["Yes", "No, it's sold out", "I have to open the menu"], note: "XXL is grey: sold out. No clicking." } ] },
+  { q: "Which button filters the list?", screens: [
+    { img: "i-l.jpg", w: 340, who: "Linear 2026", a: ["The left one", "The right one", "I'm not sure"], note: "Two icons, no words. You have to guess.", guess: true },
+    { img: "i-r.jpg", w: 730, who: "Linear before 2026", a: ["The left one", "The right one", "I'm not sure"], note: "The word tells you: Filter." } ] },
+];
+
+const $ = (id) => document.getElementById(id);
+let qi = 0, si = 0, t0 = 0, raf = 0, busy = true, times = [];
+Q.flatMap((x) => x.screens).forEach((s) => { new Image().src = D + s.img; });
+
+function show(id) { for (const s of ["start", "round", "result"]) $(s).hidden = s !== id; }
+
+function start() { qi = 0; si = 0; times = Q.map(() => []); show("round"); step(); }
+
+function step() {
+  const item = Q[qi], s = item.screens[si];
+  busy = true;
+  $("count").textContent = `Question ${qi + 1} of ${Q.length} · screen ${si + 1} of 2`;
+  $("q").textContent = item.q;
+  $("note").textContent = ""; $("note").className = "note";
+  $("timer").textContent = "0.0 s";
+  $("screen").classList.add("wait");
+  const img = $("img");
+  img.src = D + s.img; img.alt = `${s.who} screen`;
+  img.style.width = Math.min(s.w * 1.25, 940) + "px";
+  $("answers").innerHTML = "";
+  s.a.forEach((txt, i) => {
+    const b = document.createElement("button");
+    b.className = "ans"; b.disabled = true;
+    b.innerHTML = `<b>${i + 1}</b>`; b.append(txt);
+    b.onclick = () => pick(i);
+    $("answers").append(b);
+  });
+  // read the question first, then the screen appears and the clock starts
+  setTimeout(() => {
+    $("screen").classList.remove("wait");
+    for (const b of $("answers").children) b.disabled = false;
+    busy = false; t0 = performance.now(); tick();
+  }, 1200);
+}
+
+function tick() { $("timer").textContent = ((performance.now() - t0) / 1000).toFixed(1) + " s"; raf = requestAnimationFrame(tick); }
+
+function pick(i) {
+  if (busy) return;
+  busy = true; cancelAnimationFrame(raf);
+  const ms = performance.now() - t0, s = Q[qi].screens[si];
+  times[qi][si] = ms;
+  $("timer").textContent = (ms / 1000).toFixed(1) + " s";
+  [...$("answers").children].forEach((b, k) => { b.disabled = true; if (k === i) b.classList.add("picked"); });
+  $("note").textContent = s.note; $("note").className = "note" + (s.guess ? " guess" : "");
+  setTimeout(() => {
+    if (si === 0) si = 1; else { si = 0; qi++; }
+    qi < Q.length ? step() : result();
+  }, 1800);
+}
+
+function result() {
+  $("rows").innerHTML = "";
+  Q.forEach((item, k) => {
+    const tr = document.createElement("tr");
+    const [a, b] = times[k];
+    tr.innerHTML = `<td></td><td class="t${a > b ? " slow" : ""}"></td><td class="t"></td>`;
+    tr.children[0].textContent = item.q;
+    [a, b].forEach((ms, j) => {
+      const td = tr.children[j + 1];
+      td.textContent = (ms / 1000).toFixed(1) + " s";
+      const who = document.createElement("span"); who.className = "small"; who.textContent = item.screens[j].who;
+      td.append(who);
+    });
+    $("rows").append(tr);
+  });
+  show("result");
+}
+
+$("go").onclick = start;
+$("again").onclick = start;
+document.addEventListener("keydown", (e) => {
+  if (!$("start").hidden && e.key === "Enter") { e.preventDefault(); start(); }
+  else if (!$("round").hidden && "123".includes(e.key) && e.key.length === 1) pick(+e.key - 1);
+});
+</script>
+</body>
+</html>

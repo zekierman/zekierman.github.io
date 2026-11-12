@@ -6,7 +6,7 @@ author_profile: true
 
 *BİL 333 Professional English 1 · Necmettin Erbakan University · 12 November 2026*
 
-**[Slides (PDF)](/assets/files/why-good-ui-feels-good.pdf)**
+**[Slides (PDF)](/assets/files/why-good-ui-feels-good.pdf)** · **[Try it yourself: Guess or know?](/demo/)** (a one-minute demo)
 
 ## Topic
 
