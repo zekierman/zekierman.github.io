@@ -28,3 +28,5 @@ but they leave the questions open.
 5. Linear (2026, March 12). [A calmer interface for a product in motion](https://linear.app/now/behind-the-latest-design-refresh).
 6. Anthropic (2025, November 12). [Improving frontend design through Skills](https://claude.com/resources/articles/improving-frontend-design-through-skills).
 7. Merriam-Webster (2025). [Word of the Year 2025: Slop](https://www.merriam-webster.com/wordplay/word-of-the-year).
+
+**Images** (slides and demo): screenshots from the Baymard Institute articles above; [linear.app](https://linear.app); Anthropic's Skills article above; the AI-made "Willy's Chocolate Experience" ad (Glasgow, 2024) from Wikipedia's [AI slop](https://en.wikipedia.org/wiki/AI_slop) article (public domain).
